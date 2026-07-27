@@ -16,12 +16,15 @@
     --radius:18px;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+  html{scroll-behavior:smooth;overflow-x:hidden;max-width:100%;}
   body{
     font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,sans-serif;
     color:var(--text);
     background:var(--bg);
     -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    max-width:100%;
+    width:100%;
   }
   a{color:inherit;text-decoration:none;}
   .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
@@ -80,7 +83,7 @@
 
   /* ---------- TOP STAT GRID (icon-style, like Apple 4-box) ---------- */
   .stat-grid{
-    display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+    display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;
     max-width:1000px;margin:56px auto 0;padding:0 24px;
   }
   .stat-box{
@@ -88,14 +91,16 @@
     padding:26px 18px;text-align:center;min-height:150px;
     display:flex;flex-direction:column;justify-content:center;gap:6px;
   }
-  .stat-box .num{font-size:30px;font-weight:700;letter-spacing:-.01em;}
+  .stat-box .num{font-size:30px;font-weight:700;letter-spacing:-.01em;overflow-wrap:anywhere;}
   .stat-box .num.accent{color:var(--accent);}
   .stat-box .label{font-size:12px;color:var(--text-sec);line-height:1.3;}
   .stat-box .cap{font-size:10.5px;color:var(--text-sec);opacity:.7;letter-spacing:.04em;text-transform:uppercase;margin-top:2px;}
 
   @media(max-width:760px){
-    .stat-grid{grid-template-columns:repeat(2,1fr);}
+    .stat-grid{grid-template-columns:repeat(2,minmax(0,1fr));padding:0;}
     .hero h1{font-size:36px;}
+    .stat-box{padding:22px 10px;}
+    .stat-box .num{font-size:21px;}
   }
 
   /* ---------- SECTION LABEL ---------- */
@@ -118,16 +123,17 @@
   .tag.flag{background:var(--accent-bg);color:#111;border:none;}
   .feature h3{font-size:32px;font-weight:700;letter-spacing:-.01em;margin-bottom:14px;}
   .feature p{font-size:16px;color:var(--text-sec);line-height:1.6;margin-bottom:22px;}
-  .mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .mini-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;}
   .mini-stat{background:#fff;border-radius:14px;padding:14px 12px;}
-  .mini-stat .n{font-size:22px;font-weight:700;}
+  .mini-stat .n{font-size:22px;font-weight:700;overflow-wrap:anywhere;}
   .mini-stat .l{font-size:11px;color:var(--text-sec);margin-top:2px;}
 
   .chart-card{background:#fff;border-radius:20px;padding:28px;}
   .chart-card .chead{display:flex;justify-content:space-between;font-size:11px;color:var(--text-sec);margin-bottom:18px;letter-spacing:.03em;text-transform:uppercase;}
   .bars{display:flex;align-items:flex-end;gap:10px;height:180px;}
   .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;justify-content:flex-end;height:100%;}
-  .bar{width:100%;border-radius:6px 6px 2px 2px;background:var(--bg-alt);position:relative;}
+  .bar{width:100%;border-radius:6px 6px 2px 2px;background:var(--bg-alt);position:relative;
+    transition:height 1s cubic-bezier(.16,1,.3,1);}
   .bar.rev{background:var(--text);}
   .bar.spend{background:var(--accent-bg);}
   .bar-pair{display:flex;gap:3px;align-items:flex-end;height:140px;width:100%;}
@@ -137,14 +143,14 @@
   .legend i{width:9px;height:9px;border-radius:2px;display:inline-block;}
 
   /* ---------- TWO CARD ROW ---------- */
-  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .two-col{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;}
   .case-card{background:var(--bg-alt);border-radius:24px;padding:40px;}
   .case-card .kicker{font-size:12px;font-weight:700;color:var(--text-sec);letter-spacing:.05em;text-transform:uppercase;margin-bottom:8px;}
   .case-card h3{font-size:26px;font-weight:700;margin-bottom:10px;letter-spacing:-.01em;}
   .case-card p{font-size:15px;color:var(--text-sec);line-height:1.55;margin-bottom:20px;}
   .case-card .learn{font-size:14px;font-weight:600;color:var(--text);}
-  .case-card .kpi-row{display:flex;gap:24px;margin-top:22px;}
-  .case-card .kpi .n{font-size:26px;font-weight:700;}
+  .case-card .kpi-row{display:flex;flex-wrap:wrap;gap:16px 24px;margin-top:22px;}
+  .case-card .kpi .n{font-size:26px;font-weight:700;overflow-wrap:anywhere;}
   .case-card .kpi .l{font-size:11px;color:var(--text-sec);}
   .case-card .visual{
     margin-top:26px;padding-top:22px;border-top:1px solid var(--line);
@@ -162,12 +168,17 @@
   .visual .cap b{color:var(--text);font-weight:700;}
 
   @media(max-width:760px){
-    .feature{grid-template-columns:1fr;padding:32px;}
-    .two-col{grid-template-columns:1fr;}
+    .feature{grid-template-columns:minmax(0,1fr);padding:32px;}
+    .two-col{grid-template-columns:minmax(0,1fr);}
+    .mini-stat{padding:12px 6px;}
+    .mini-stat .n{font-size:13px;}
+    .case-card{padding:28px 24px;}
+    .case-card .kpi .n{font-size:21px;}
+    .client-card .kpi .n{font-size:19px;}
   }
 
   /* ---------- CLIENT GRID (equal-weight brand cards) ---------- */
-  .client-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .client-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;}
   .client-card{background:#fff;border-radius:24px;padding:32px;border:1px solid var(--line);}
   .client-mark{width:48px;height:48px;border-radius:12px;
     display:flex;align-items:center;justify-content:center;margin-bottom:18px;background:var(--bg-alt);padding:8px;}
@@ -175,10 +186,10 @@
   .client-card h3{font-size:21px;font-weight:700;margin-bottom:4px;letter-spacing:-.01em;}
   .client-card .kicker{font-size:12px;color:var(--text-sec);font-weight:600;margin-bottom:12px;}
   .client-card p{font-size:14px;color:var(--text-sec);line-height:1.55;margin-bottom:20px;}
-  .client-card .kpi-row{display:flex;gap:24px;}
-  .client-card .kpi .n{font-size:22px;font-weight:700;}
+  .client-card .kpi-row{display:flex;flex-wrap:wrap;gap:12px 24px;}
+  .client-card .kpi .n{font-size:22px;font-weight:700;overflow-wrap:anywhere;}
   .client-card .kpi .l{font-size:11px;color:var(--text-sec);}
-  @media(max-width:900px){.client-grid{grid-template-columns:1fr;}}
+  @media(max-width:900px){.client-grid{grid-template-columns:minmax(0,1fr);}}
 
   /* ---------- CREATIVE GALLERY ---------- */
   .gallery{column-count:3;column-gap:14px;margin-top:44px;}
@@ -218,32 +229,48 @@
   @media(max-width:760px){.v-card{width:150px;}}
 
   /* ---------- MOTION ---------- */
-  @media (prefers-reduced-motion: no-preference){
-    .reveal{opacity:0;transform:translateY(22px);
-      transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);}
-    .reveal.in{opacity:1;transform:none;}
-    .stat-grid .stat-box:nth-child(1){transition-delay:.05s;}
-    .stat-grid .stat-box:nth-child(2){transition-delay:.12s;}
-    .stat-grid .stat-box:nth-child(3){transition-delay:.19s;}
-    .stat-grid .stat-box:nth-child(4){transition-delay:.26s;}
-    .client-grid .client-card:nth-child(1){transition-delay:0s;}
-    .client-grid .client-card:nth-child(2){transition-delay:.1s;}
-    .client-grid .client-card:nth-child(3){transition-delay:.2s;}
-    .two-col .case-card:nth-child(2){transition-delay:.12s;}
-    .gallery .g-item:nth-child(odd){transition-delay:.06s;}
-    .gallery .g-item:nth-child(even){transition-delay:.14s;}
-    .video-reel .v-card:nth-child(1){transition-delay:0s;}
-    .video-reel .v-card:nth-child(2){transition-delay:.06s;}
-    .video-reel .v-card:nth-child(3){transition-delay:.12s;}
-    .video-reel .v-card:nth-child(4){transition-delay:.18s;}
-    .video-reel .v-card:nth-child(5){transition-delay:.24s;}
-    .process .p-step:nth-child(1){transition-delay:0s;}
-    .process .p-step:nth-child(2){transition-delay:.06s;}
-    .process .p-step:nth-child(3){transition-delay:.12s;}
-    .process .p-step:nth-child(4){transition-delay:.18s;}
-    .process .p-step:nth-child(5){transition-delay:.24s;}
-    .process .p-step:nth-child(6){transition-delay:.3s;}
+  .reveal{opacity:0;transform:translateY(22px);
+    transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);}
+  .reveal.in{opacity:1;transform:none;}
+  .stat-grid .stat-box:nth-child(1){transition-delay:.05s;}
+  .stat-grid .stat-box:nth-child(2){transition-delay:.12s;}
+  .stat-grid .stat-box:nth-child(3){transition-delay:.19s;}
+  .stat-grid .stat-box:nth-child(4){transition-delay:.26s;}
+  .client-grid .client-card:nth-child(1){transition-delay:0s;}
+  .client-grid .client-card:nth-child(2){transition-delay:.1s;}
+  .client-grid .client-card:nth-child(3){transition-delay:.2s;}
+  .two-col .case-card:nth-child(2){transition-delay:.12s;}
+  .gallery .g-item:nth-child(odd){transition-delay:.06s;}
+  .gallery .g-item:nth-child(even){transition-delay:.14s;}
+  .video-reel .v-card:nth-child(1){transition-delay:0s;}
+  .video-reel .v-card:nth-child(2){transition-delay:.06s;}
+  .video-reel .v-card:nth-child(3){transition-delay:.12s;}
+  .video-reel .v-card:nth-child(4){transition-delay:.18s;}
+  .video-reel .v-card:nth-child(5){transition-delay:.24s;}
+  .process .p-step:nth-child(1){transition-delay:0s;}
+  .process .p-step:nth-child(2){transition-delay:.06s;}
+  .process .p-step:nth-child(3){transition-delay:.12s;}
+  .process .p-step:nth-child(4){transition-delay:.18s;}
+  .process .p-step:nth-child(5){transition-delay:.24s;}
+  .process .p-step:nth-child(6){transition-delay:.3s;}
+  .skill-tags.reveal span{transition-delay:inherit;}
+  .section-sub.reveal{transition-delay:.08s;}
+  .eyebrow.reveal{transition-delay:0s;}
+  .hero .badge.reveal{transition-delay:0s;}
+  .hero h1.reveal{transition-delay:.08s;}
+  .hero .lede.reveal{transition-delay:.16s;}
+  .hero .ctas.reveal{transition-delay:.24s;}
+  .foot-cta h2.reveal{transition-delay:0s;}
+  .foot-cta p.reveal{transition-delay:.08s;}
+  .foot-grid.reveal{transition-delay:.1s;}
+
+  /* Header gains depth once the page scrolls */
+  header.nav{transition:background .3s, box-shadow .3s, border-color .3s;}
+  header.nav.scrolled{
+    background:rgba(255,255,255,0.92);
+    box-shadow:0 8px 24px -18px rgba(0,0,0,.35);
   }
+
   .stat-box,.client-card,.case-card,.g-item,.v-card{transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s;}
   .stat-box:hover{transform:translateY(-3px);}
   .client-card:hover, .case-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px -20px rgba(0,0,0,.25);}
@@ -256,13 +283,13 @@
   .cta-secondary:hover{transform:translateY(-2px);border-color:var(--text);}
 
   /* ---------- PROCESS STRIP ---------- */
-  .process{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:44px;}
-  .process-3col{grid-template-columns:repeat(3,1fr);}
+  .process{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;margin-top:44px;}
+  .process-3col{grid-template-columns:repeat(3,minmax(0,1fr));}
   .p-step{padding:0;}
   .p-step .idx{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:10px;}
   .p-step h4{font-size:16px;font-weight:700;margin-bottom:8px;}
   .p-step p{font-size:13px;color:var(--text-sec);line-height:1.5;}
-  @media(max-width:900px){.process{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:900px){.process{grid-template-columns:repeat(2,minmax(0,1fr));}}
 
   /* ---------- SKILL TAGS ---------- */
   .skill-tags-head{font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
@@ -295,11 +322,11 @@
   .foot-cta{text-align:center;margin-bottom:56px;}
   .foot-cta h2{font-size:34px;font-weight:700;margin-bottom:10px;}
   .foot-cta p{color:var(--text-sec);font-size:16px;max-width:480px;margin:0 auto 26px;}
-  .foot-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;border-top:1px solid var(--line);padding-top:32px;font-size:13px;}
+  .foot-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;border-top:1px solid var(--line);padding-top:32px;font-size:13px;}
   .foot-grid .l{color:var(--text-sec);font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
-  .foot-grid .v{font-weight:600;}
+  .foot-grid .v{font-weight:600;overflow-wrap:anywhere;}
   .foot-bottom{text-align:center;margin-top:40px;font-size:12px;color:var(--text-sec);}
-  @media(max-width:760px){.foot-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:760px){.foot-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
 </style>
 </head>
 <body>
@@ -320,32 +347,32 @@
 
 <section class="hero">
   <div class="wrap">
-    <div class="badge"><span class="pulse"></span> DIGITAL MARKETING · PERFORMANCE MARKETER · HÀ NỘI</div>
-    <h1>Nguyễn Cao<br><span>Danh Minh.</span></h1>
-    <p class="lede">Digital Marketer chuyên Performance / Meta Ads. Trực tiếp triển khai và tối ưu quảng cáo cho nhiều brand thuộc nhiều ngành hàng khác nhau. 4 năm kinh nghiệm — biến ngân sách thành doanh thu đo được mỗi ngày.</p>
-    <div class="ctas">
+    <div class="badge reveal"><span class="pulse"></span> DIGITAL MARKETING · PERFORMANCE MARKETER · HÀ NỘI</div>
+    <h1 class="reveal">Nguyễn Cao<br><span>Danh Minh.</span></h1>
+    <p class="lede reveal">Digital Marketer chuyên Performance / Meta Ads. Trực tiếp triển khai và tối ưu quảng cáo cho nhiều brand thuộc nhiều ngành hàng khác nhau. 4 năm kinh nghiệm — biến ngân sách thành doanh thu đo được mỗi ngày.</p>
+    <div class="ctas reveal">
       <a class="cta-primary" href="#cases">Xem case studies →</a>
       <a class="cta-secondary" href="#contact">Liên hệ tuyển dụng</a>
     </div>
 
     <div class="stat-grid" id="stats">
       <div class="stat-box reveal">
-        <div class="num accent">22x</div>
+        <div class="num accent" data-cu-end="22" data-cu-dec="0" data-cu-prefix="" data-cu-suffix="x">22x</div>
         <div class="label">ROI peak</div>
         <div class="cap">FICAR · T8/25</div>
       </div>
       <div class="stat-box reveal">
-        <div class="num">3.5B₫</div>
+        <div class="num" data-cu-end="3.5" data-cu-dec="1" data-cu-prefix="" data-cu-suffix="B₫">3.5B₫</div>
         <div class="label">Tổng doanh thu</div>
         <div class="cap">3 brand · 10 tháng</div>
       </div>
       <div class="stat-box reveal">
-        <div class="num">188.7M₫</div>
+        <div class="num" data-cu-end="188.7" data-cu-dec="1" data-cu-prefix="" data-cu-suffix="M₫">188.7M₫</div>
         <div class="label">Ngân sách quản lý</div>
         <div class="cap">Across 3 brands</div>
       </div>
       <div class="stat-box reveal">
-        <div class="num">62.9k₫</div>
+        <div class="num" data-cu-end="62.9" data-cu-dec="1" data-cu-prefix="" data-cu-suffix="k₫">62.9k₫</div>
         <div class="label">CPA / tin nhắn</div>
         <div class="cap">FitForLife · T5</div>
       </div>
@@ -355,9 +382,9 @@
 
 <section id="skills">
   <div class="wrap">
-    <div class="eyebrow">02 · Kỹ năng &amp; công cụ</div>
+    <div class="eyebrow reveal">02 · Kỹ năng &amp; công cụ</div>
     <h2 class="section-title reveal">Làm chủ từ chiến lược<br>đến số liệu.</h2>
-    <p class="section-sub">Kinh nghiệm trải dài từ lên chiến lược, sản xuất content, đến đọc số và tối ưu funnel.</p>
+    <p class="section-sub reveal">Kinh nghiệm trải dài từ lên chiến lược, sản xuất content, đến đọc số và tối ưu funnel.</p>
 
     <div class="process process-3col">
       <div class="p-step reveal"><h4>Chiến lược &amp; triển khai</h4><p>Chiến dịch đa mục tiêu: traffic, lead, message, conversion. Xây hệ thống quảng cáo có khả năng scale.</p></div>
@@ -396,9 +423,9 @@
 
 <section class="alt" id="experience">
   <div class="wrap">
-    <div class="eyebrow">03 · Đối tác đã đồng hành</div>
+    <div class="eyebrow reveal">03 · Đối tác đã đồng hành</div>
     <h2 class="section-title reveal">Khác ngành, khác bài toán.<br>Một cách làm không đổi.</h2>
-    <p class="section-sub">Trực tiếp lên chiến lược, triển khai và tối ưu Meta Ads cho từng brand — không giới hạn ở một ngành hay một khách hàng.</p>
+    <p class="section-sub reveal">Trực tiếp lên chiến lược, triển khai và tối ưu Meta Ads cho từng brand — không giới hạn ở một ngành hay một khách hàng.</p>
 
     <div style="height:32px"></div>
 
@@ -409,8 +436,8 @@
         <div class="kicker">Nền tảng số dành riêng cho người dùng ô tô tại Việt Nam</div>
         <p>Trolyoto.com — một trợ lý chăm xe toàn diện. CBO + creative refresh mỗi 7–10 ngày, audit CPmess hằng ngày. Giữ CPmess ổn định dù scale spend x3.</p>
         <div class="kpi-row">
-          <div class="kpi"><div class="n">22x</div><div class="l">ROI đỉnh</div></div>
-          <div class="kpi"><div class="n">~2.7 tỷ</div><div class="l">Doanh thu 10 tháng</div></div>
+          <div class="kpi"><div class="n" data-cu-end="22" data-cu-dec="0" data-cu-prefix="" data-cu-suffix="x">22x</div><div class="l">ROI đỉnh</div></div>
+          <div class="kpi"><div class="n" data-cu-end="2.7" data-cu-dec="1" data-cu-prefix="~" data-cu-suffix=" tỷ">~2.7 tỷ</div><div class="l">Doanh thu 10 tháng</div></div>
         </div>
       </div>
       <div class="client-card reveal">
@@ -419,8 +446,8 @@
         <div class="kicker">Happy Photography · Studio chụp ảnh kỷ yếu</div>
         <p>Gom leads mùa kỷ yếu T3–T5, tối ưu CPO theo tuần, giữ chất lượng data ở mức không có data rác.</p>
         <div class="kpi-row">
-          <div class="kpi"><div class="n">87%</div><div class="l">KPI đơn T4</div></div>
-          <div class="kpi"><div class="n">1.092</div><div class="l">Leads T4</div></div>
+          <div class="kpi"><div class="n" data-cu-end="87" data-cu-dec="0" data-cu-prefix="" data-cu-suffix="%">87%</div><div class="l">KPI đơn T4</div></div>
+          <div class="kpi"><div class="n" data-cu-end="1092" data-cu-dec="0" data-cu-prefix="" data-cu-suffix="" data-cu-dot="1">1.092</div><div class="l">Leads T4</div></div>
         </div>
       </div>
       <div class="client-card reveal">
@@ -429,8 +456,8 @@
         <div class="kicker">Gym &amp; Pilates · Premium studio</div>
         <p>Quick-launch trong 20 ngày, kéo CPA/mess xuống mức tốt cho ngành premium fitness, scale spend x4.2.</p>
         <div class="kpi-row">
-          <div class="kpi"><div class="n">62.9k₫</div><div class="l">CPA/mess</div></div>
-          <div class="kpi"><div class="n">x4.2</div><div class="l">Scale spend</div></div>
+          <div class="kpi"><div class="n" data-cu-end="62.9" data-cu-dec="1" data-cu-prefix="" data-cu-suffix="k₫">62.9k₫</div><div class="l">CPA/mess</div></div>
+          <div class="kpi"><div class="n" data-cu-end="4.2" data-cu-dec="1" data-cu-prefix="x" data-cu-suffix="">x4.2</div><div class="l">Scale spend</div></div>
         </div>
       </div>
     </div>
@@ -439,9 +466,9 @@
 
 <section id="cases">
   <div class="wrap">
-    <div class="eyebrow">04 · Case Studies</div>
+    <div class="eyebrow reveal">04 · Case Studies</div>
     <h2 class="section-title reveal">Số thật. Khách thật.<br>Tối ưu hằng ngày.</h2>
-    <p class="section-sub">3 case · cập nhật 05.2026 · nguồn: Ads Manager &amp; GG Sheet.</p>
+    <p class="section-sub reveal">3 case · cập nhật 05.2026 · nguồn: Ads Manager &amp; GG Sheet.</p>
 
     <div style="height:40px"></div>
 
@@ -454,31 +481,31 @@
         <h3>FICAR — Trợ Lý Ô Tô</h3>
         <p>Trolyoto.com — nền tảng số dành riêng cho người dùng ô tô tại Việt Nam, một trợ lý chăm xe toàn diện. CBO + creative refresh mỗi 7–10 ngày, audit CPmess hằng ngày. Giữ CPmess 9.7–20k₫ ổn định dù scale spend x3.</p>
         <div class="mini-stats">
-          <div class="mini-stat"><div class="n">22x</div><div class="l">ROI cao nhất · T8/25</div></div>
-          <div class="mini-stat"><div class="n">663.6M</div><div class="l">Doanh thu đỉnh · T1/26</div></div>
-          <div class="mini-stat"><div class="n">~2.7 tỷ</div><div class="l">Tổng doanh thu 10 tháng</div></div>
+          <div class="mini-stat"><div class="n" data-cu-end="22" data-cu-dec="0" data-cu-prefix="" data-cu-suffix="x">22x</div><div class="l">ROI cao nhất · T8/25</div></div>
+          <div class="mini-stat"><div class="n" data-cu-end="663.6" data-cu-dec="1" data-cu-prefix="" data-cu-suffix="M">663.6M</div><div class="l">Doanh thu đỉnh · T1/26</div></div>
+          <div class="mini-stat"><div class="n" data-cu-end="2.7" data-cu-dec="1" data-cu-prefix="~" data-cu-suffix=" tỷ">~2.7 tỷ</div><div class="l">Tổng doanh thu 10 tháng</div></div>
         </div>
       </div>
       <div class="chart-card">
         <div class="chead"><span>Spend vs Revenue (₫M)</span><span>T7/25 → T4/26</span></div>
         <div class="bars">
           <div class="bar-col"><div class="bar-pair" style="align-items:flex-end;">
-              <div class="bar spend" style="height:26%"></div><div class="bar rev" style="height:20%"></div>
+              <div class="bar spend" data-h="26" style="height:0%"></div><div class="bar rev" data-h="20" style="height:0%"></div>
             </div><div class="bar-label">T7</div></div>
           <div class="bar-col"><div class="bar-pair">
-              <div class="bar spend" style="height:40%"></div><div class="bar rev" style="height:41%"></div>
+              <div class="bar spend" data-h="40" style="height:0%"></div><div class="bar rev" data-h="41" style="height:0%"></div>
             </div><div class="bar-label">T8</div></div>
           <div class="bar-col"><div class="bar-pair">
-              <div class="bar spend" style="height:30%"></div><div class="bar rev" style="height:28%"></div>
+              <div class="bar spend" data-h="30" style="height:0%"></div><div class="bar rev" data-h="28" style="height:0%"></div>
             </div><div class="bar-label">T9</div></div>
           <div class="bar-col"><div class="bar-pair">
-              <div class="bar spend" style="height:55%"></div><div class="bar rev" style="height:100%"></div>
+              <div class="bar spend" data-h="55" style="height:0%"></div><div class="bar rev" data-h="100" style="height:0%"></div>
             </div><div class="bar-label">T1</div></div>
           <div class="bar-col"><div class="bar-pair">
-              <div class="bar spend" style="height:38%"></div><div class="bar rev" style="height:53%"></div>
+              <div class="bar spend" data-h="38" style="height:0%"></div><div class="bar rev" data-h="53" style="height:0%"></div>
             </div><div class="bar-label">T3</div></div>
           <div class="bar-col"><div class="bar-pair">
-              <div class="bar spend" style="height:39%"></div><div class="bar rev" style="height:54%"></div>
+              <div class="bar spend" data-h="39" style="height:0%"></div><div class="bar rev" data-h="54" style="height:0%"></div>
             </div><div class="bar-label">T4</div></div>
         </div>
         <div class="legend">
@@ -496,14 +523,14 @@
         <h3>87% KPI đơn — T4/2026</h3>
         <p>Studio chụp ảnh kỷ yếu, T3–T5/2026. Gom 1.092 leads chất lượng trong 1 tháng, data tiềm năng 100% — không có data rác.</p>
         <div class="kpi-row">
-          <div class="kpi"><div class="n">897k₫</div><div class="l">CPO online</div></div>
-          <div class="kpi"><div class="n">1.092</div><div class="l">Leads T4</div></div>
-          <div class="kpi"><div class="n">578.6M</div><div class="l">Doanh số T4</div></div>
+          <div class="kpi"><div class="n" data-cu-end="897" data-cu-dec="0" data-cu-prefix="" data-cu-suffix="k₫">897k₫</div><div class="l">CPO online</div></div>
+          <div class="kpi"><div class="n" data-cu-end="1092" data-cu-dec="0" data-cu-prefix="" data-cu-suffix="" data-cu-dot="1">1.092</div><div class="l">Leads T4</div></div>
+          <div class="kpi"><div class="n" data-cu-end="578.6" data-cu-dec="1" data-cu-prefix="" data-cu-suffix="M">578.6M</div><div class="l">Doanh số T4</div></div>
         </div>
         <div class="visual">
           <div class="ring">
             <svg viewBox="0 0 84 84"><circle class="track" cx="42" cy="42" r="36"></circle><circle class="prog" cx="42" cy="42" r="36" data-pct="87"></circle></svg>
-            <div class="val">87%</div>
+            <div class="val" data-cu-end="87" data-cu-dec="0" data-cu-prefix="" data-cu-suffix="%">87%</div>
           </div>
           <div class="cap"><b>52/60 đơn</b> hoàn thành trong tháng — vượt KPI ban đầu.</div>
         </div>
@@ -513,14 +540,14 @@
         <h3>CTR 44.15% — chiến dịch tuyển dụng</h3>
         <p>Premium studio Gym &amp; Pilates, T4–T5/2026. Sau 20 ngày, CPA/mess về 62.9k₫ — tốt cho ngành premium fitness. Scale spend x4.2 trong 1 tháng.</p>
         <div class="kpi-row">
-          <div class="kpi"><div class="n">62.9k₫</div><div class="l">CPA/mess</div></div>
-          <div class="kpi"><div class="n">x10</div><div class="l">Tăng trưởng mess</div></div>
-          <div class="kpi"><div class="n">x4.2</div><div class="l">Scale spend</div></div>
+          <div class="kpi"><div class="n" data-cu-end="62.9" data-cu-dec="1" data-cu-prefix="" data-cu-suffix="k₫">62.9k₫</div><div class="l">CPA/mess</div></div>
+          <div class="kpi"><div class="n" data-cu-end="10" data-cu-dec="0" data-cu-prefix="x" data-cu-suffix="">x10</div><div class="l">Tăng trưởng mess</div></div>
+          <div class="kpi"><div class="n" data-cu-end="4.2" data-cu-dec="1" data-cu-prefix="x" data-cu-suffix="">x4.2</div><div class="l">Scale spend</div></div>
         </div>
         <div class="visual">
           <div class="ring">
             <svg viewBox="0 0 84 84"><circle class="track" cx="42" cy="42" r="36"></circle><circle class="prog" cx="42" cy="42" r="36" data-pct="44.15"></circle></svg>
-            <div class="val">44%</div>
+            <div class="val" data-cu-end="44" data-cu-dec="0" data-cu-prefix="" data-cu-suffix="%">44%</div>
           </div>
           <div class="cap"><b>CTR 44.15%</b> — outlier so với mặt bằng chung ngành fitness.</div>
         </div>
@@ -531,9 +558,9 @@
 
 <section class="alt" id="creative">
   <div class="wrap">
-    <div class="eyebrow">05 · Creative đã triển khai</div>
+    <div class="eyebrow reveal">05 · Creative đã triển khai</div>
     <h2 class="section-title reveal">Không chỉ đọc số,<br>còn tự tay làm creative.</h2>
-    <p class="section-sub">Một số ảnh quảng cáo thực tế đã lên chiến dịch cho FICAR / Trợ Lý Oto và FitForLife.</p>
+    <p class="section-sub reveal">Một số ảnh quảng cáo thực tế đã lên chiến dịch cho FICAR / Trợ Lý Oto và FitForLife.</p>
 
     <div class="gallery">
       <div class="g-item reveal">
@@ -611,9 +638,9 @@
 
 <section id="process">
   <div class="wrap">
-    <div class="eyebrow">06 · Quy trình</div>
+    <div class="eyebrow reveal">06 · Quy trình</div>
     <h2 class="section-title reveal">5 bước, vòng lặp tuần.</h2>
-    <p class="section-sub">Từ audit đến scale — lặp lại mỗi tuần cho từng brand.</p>
+    <p class="section-sub reveal">Từ audit đến scale — lặp lại mỗi tuần cho từng brand.</p>
 
     <div class="process">
       <div class="p-step reveal"><div class="idx">01</div><h4>Discover</h4><p>Audit hiện trạng, hiểu sản phẩm, đối tượng và KPI thực tế của brand.</p></div>
@@ -628,11 +655,11 @@
 <footer id="contact">
   <div class="wrap">
     <div class="foot-cta">
-      <h2>Sẵn sàng cho cơ hội tiếp theo.</h2>
-      <p>Rất vui được trao đổi thêm về kinh nghiệm và CV. Liên hệ trực tiếp qua email hoặc số điện thoại bên dưới.</p>
+      <h2 class="reveal">Sẵn sàng cho cơ hội tiếp theo.</h2>
+      <p class="reveal">Rất vui được trao đổi thêm về kinh nghiệm và CV. Liên hệ trực tiếp qua email hoặc số điện thoại bên dưới.</p>
       <a class="cta-primary" href="mailto:danhminh66@gmail.com">danhminh66@gmail.com</a>
     </div>
-    <div class="foot-grid">
+    <div class="foot-grid reveal">
       <div><div class="l">Email</div><div class="v">danhminh66@gmail.com</div></div>
       <div><div class="l">Phone</div><div class="v">0528 548 406</div></div>
       <div><div class="l">Base</div><div class="v">Hà Nội, VN</div></div>
@@ -659,6 +686,29 @@ document.querySelectorAll('.v-card[data-tiktok]').forEach(function(card){
     .catch(function(){ /* giữ nền placeholder nếu TikTok chặn fetch */ });
 });
 
+function formatCount(v, dec, prefix, suffix, dot){
+  var s;
+  if(dot){ s = Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+  else{ s = v.toFixed(dec); }
+  return prefix + s + suffix;
+}
+function animateCount(el){
+  var end = parseFloat(el.getAttribute('data-cu-end'));
+  var dec = parseInt(el.getAttribute('data-cu-dec')||'0', 10);
+  var prefix = el.getAttribute('data-cu-prefix')||'';
+  var suffix = el.getAttribute('data-cu-suffix')||'';
+  var dot = el.getAttribute('data-cu-dot')==='1';
+  var duration = 1200, t0 = null;
+  function step(ts){
+    if(!t0) t0 = ts;
+    var p = Math.min((ts-t0)/duration, 1);
+    var eased = 1 - Math.pow(1-p, 3);
+    el.textContent = formatCount(end*eased, dec, prefix, suffix, dot);
+    if(p<1){ requestAnimationFrame(step); } else { el.textContent = formatCount(end, dec, prefix, suffix, dot); }
+  }
+  requestAnimationFrame(step);
+}
+
 var io = new IntersectionObserver(function(entries){
   entries.forEach(function(entry){
     if(entry.isIntersecting){
@@ -669,11 +719,26 @@ var io = new IntersectionObserver(function(entries){
         var offset = 226 - (226 * pct / 100);
         requestAnimationFrame(function(){ ring.style.strokeDashoffset = offset; });
       }
+      if(entry.target.querySelectorAll){
+        entry.target.querySelectorAll('[data-cu-end]').forEach(function(el){ animateCount(el); });
+        entry.target.querySelectorAll('.bar[data-h]').forEach(function(b){
+          var h = b.getAttribute('data-h');
+          requestAnimationFrame(function(){ b.style.height = h + '%'; });
+        });
+      }
       io.unobserve(entry.target);
     }
   });
 }, {threshold:0.15, rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+var navEl = document.querySelector('header.nav');
+function onNavScroll(){
+  if(window.scrollY > 8){ navEl.classList.add('scrolled'); }
+  else{ navEl.classList.remove('scrolled'); }
+}
+window.addEventListener('scroll', onNavScroll, {passive:true});
+onNavScroll();
 </script>
 </body>
 </html>
