@@ -181,10 +181,10 @@
   @media(max-width:900px){.client-grid{grid-template-columns:1fr;}}
 
   /* ---------- CREATIVE GALLERY ---------- */
-  .gallery{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:10px;gap:14px;margin-top:44px;}
-  .g-item{position:relative;border-radius:18px;overflow:hidden;background:var(--bg-alt);grid-column:span 2;grid-row:span 24;}
-  .g-item.tall{grid-row:span 34;}
-  .g-item img{width:100%;height:100%;object-fit:cover;display:block;}
+  .gallery{column-count:3;column-gap:14px;margin-top:44px;}
+  .g-item{position:relative;border-radius:18px;overflow:hidden;background:var(--bg-alt);
+    break-inside:avoid;margin-bottom:14px;display:block;}
+  .g-item img{width:100%;height:auto;display:block;}
   .g-item .g-cap{
     position:absolute;left:0;right:0;bottom:0;padding:16px 16px 14px;
     background:linear-gradient(to top,rgba(0,0,0,.72),rgba(0,0,0,0));color:#fff;
@@ -192,8 +192,7 @@
   .g-item .g-cap .b{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;opacity:.85;}
   .g-item .g-cap .t{font-size:13.5px;font-weight:600;line-height:1.35;margin-top:3px;}
   @media(max-width:900px){
-    .gallery{grid-template-columns:repeat(2,1fr);}
-    .g-item{grid-column:span 1;}
+    .gallery{column-count:2;}
   }
 
   /* ---------- VIDEO REEL (TikTok oEmbed thumbnails) ---------- */
@@ -537,7 +536,7 @@
     <p class="section-sub">Một số ảnh quảng cáo thực tế đã lên chiến dịch cho FICAR / Trợ Lý Oto và FitForLife.</p>
 
     <div class="gallery">
-      <div class="g-item tall reveal">
+      <div class="g-item reveal">
         <img src="media/ficar-standee.jpg" alt="Standee Trợ Lý Oto">
         <div class="g-cap"><div class="b">FICAR · Trợ Lý Oto</div><div class="t">Standee + key visual — Mua lốp chuẩn, không lo hớ</div></div>
       </div>
